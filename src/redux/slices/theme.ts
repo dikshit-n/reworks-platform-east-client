@@ -4,10 +4,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const getTheme = () => {
   try {
     return (
-      (window.localStorage.getItem("theme") as THEME) || "pure-light-theme"
+      (window.localStorage.getItem("theme") as THEME) ||
+      "pure-light-theme-minimal-sidebar"
     );
   } catch {
-    return "pure-light-theme";
+    return "pure-light-theme-minimal-sidebar";
   }
 };
 const initialState: THEME = getTheme();

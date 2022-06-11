@@ -1,9 +1,18 @@
 import * as CustomThemes from "./variants";
 
+export enum THEME_NAMES {
+  PureLightTheme = "pure-light-theme",
+  PureLightThemeMinimalSidebar = "pure-light-theme-minimal-sidebar",
+  GreyGooseTheme = "grey-goose-theme",
+  PurpleFlowTheme = "purple-flow-theme",
+}
+
 const customThemes = {
-  "pure-light-theme": CustomThemes.PureLightTheme,
-  "grey-goose-theme": CustomThemes.GreyGooseTheme,
-  "purple-flow-theme": CustomThemes.PurpleFlowTheme,
+  [THEME_NAMES.PureLightTheme]: CustomThemes.PureLightTheme,
+  [THEME_NAMES.PureLightThemeMinimalSidebar]:
+    CustomThemes.PureLightThemeMinimalSidebar,
+  [THEME_NAMES.GreyGooseTheme]: CustomThemes.GreyGooseTheme,
+  [THEME_NAMES.PurpleFlowTheme]: CustomThemes.PurpleFlowTheme,
 };
 
 export type THEME = keyof typeof customThemes;

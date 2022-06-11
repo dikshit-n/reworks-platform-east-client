@@ -66,25 +66,9 @@ export interface INITIALIZE_ACTION {
   data: AUTH_DATA | null;
 }
 
-export type LOGIN_DATA = EMAIL_LOGIN_DATA | PHONE_NUMBER_LOGIN_DATA;
-
-export interface EMAIL_LOGIN_DATA {
+export interface LOGIN_DATA {
   email: string;
   password: string;
-}
-
-export interface PHONE_NUMBER_LOGIN_DATA {
-  phoneNumber: string | number;
-  otp: string;
-}
-
-export interface SEND_OTP_SUBMIT_DATA {
-  phoneNumber: string | number;
-}
-
-export interface VERIFY_OTP_SUBMIT_DATA {
-  phoneNumber: string | number;
-  otp: string;
 }
 
 // contexts

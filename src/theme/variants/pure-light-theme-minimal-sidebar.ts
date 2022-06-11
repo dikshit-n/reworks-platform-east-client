@@ -13,6 +13,7 @@ const themeColors = {
   black: "#223354",
   white: "#ffffff",
   primaryAlt: "#000C57",
+  primaryBackground: "#1C6DD0",
 };
 
 const colors = {
@@ -44,7 +45,7 @@ const colors = {
       "0px 1px 4px rgba(85, 105, 255, 0.25), 0px 3px 12px 2px rgba(85, 105, 255, 0.35)",
     warning:
       "0px 1px 4px rgba(255, 163, 25, 0.25), 0px 3px 12px 2px rgba(255, 163, 25, 0.35)",
-    card: "0px 9px 16px rgba(159, 162, 191, .18), 0px 2px 2px rgba(159, 162, 191, 0.32)",
+    card: "4px 6px 9px 8px rgba(230,230,230,0.69)",
     cardSm:
       "0px 2px 3px rgba(159, 162, 191, .18), 0px 1px 1px rgba(159, 162, 191, 0.32)",
     cardLg:
@@ -55,13 +56,13 @@ const colors = {
       bodyBg: "#f2f5f9",
     },
     sidebar: {
-      background: themeColors.black,
-      textColor: themeColors.white,
-      dividerBg: "#f2f5f9",
-      menuItemColor: "#242E6F",
-      menuItemColorActive: themeColors.primary,
+      background: themeColors.primaryBackground,
+      textColor: themeColors.black,
+      dividerBg: alpha(themeColors.white, 0.7),
+      menuItemColor: themeColors.white,
+      menuItemColorActive: themeColors.primaryBackground,
       menuItemBg: themeColors.white,
-      menuItemBgActive: "#f2f5f9",
+      menuItemBgActive: alpha(themeColors.white, 1),
       menuItemIconColor: lighten(themeColors.secondary, 0.3),
       menuItemIconColorActive: themeColors.primary,
       menuItemHeadingColor: darken(themeColors.secondary, 0.3),
@@ -131,7 +132,7 @@ const colors = {
   },
 };
 
-export const PureLightTheme = createTheme({
+export const PureLightThemeMinimalSidebar = createTheme({
   // direction: i18n.dir(),
   colors: {
     gradients: {
@@ -240,12 +241,11 @@ export const PureLightTheme = createTheme({
     menuItemIconColor: colors.layout.sidebar.menuItemIconColor,
     menuItemIconColorActive: colors.layout.sidebar.menuItemIconColorActive,
     menuItemHeadingColor: colors.layout.sidebar.menuItemHeadingColor,
-    boxShadow:
-      "2px 0 3px rgba(159, 162, 191, .18), 1px 0 1px rgba(159, 162, 191, 0.32)",
+    boxShadow: "4px 6px 9px 8px rgba(230,230,230,0.69)",
   },
   header: {
     background: colors.alpha.white[100],
-    boxShadow: colors.shadows.cardSm,
+    boxShadow: "4px 6px 9px 8px rgba(230,230,230,0.57)",
     textColor: colors.secondary.main,
   },
   spacing: 9,
@@ -452,6 +452,15 @@ export const PureLightTheme = createTheme({
         },
       },
     },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          "& > .MuiOutlinedInput-root": {
+            borderRadius: "50px !important",
+          },
+        },
+      },
+    },
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
@@ -596,7 +605,13 @@ export const PureLightTheme = createTheme({
           textTransform: "none",
           paddingLeft: 16,
           paddingRight: 16,
-
+          transition: "transform 0.2s ease, background 0.3s ease",
+          "&:hover": {
+            transform: "scale(1.1)",
+          },
+          "&:active": {
+            transform: "scale(0.9)",
+          },
           ".MuiSvgIcon-root": {
             transition: "all .2s",
           },
@@ -670,9 +685,15 @@ export const PureLightTheme = createTheme({
         root: {
           borderRadius: 8,
           padding: 8,
-
+          transition: "transform 0.2s ease, background 0.3s ease",
           "& .MuiTouchRipple-root": {
             borderRadius: 8,
+          },
+          "&:hover": {
+            transform: "scale(1.1)",
+          },
+          "&:active": {
+            transform: "scale(0.9)",
           },
         },
         sizeSmall: {
@@ -994,7 +1015,8 @@ export const PureLightTheme = createTheme({
           textTransform: "uppercase",
           fontSize: 13,
           fontWeight: "bold",
-          color: colors.alpha.black[70],
+          color: themeColors.white,
+          backgroundColor: themeColors.primaryBackground,
         },
       },
     },
@@ -1164,8 +1186,7 @@ export const PureLightTheme = createTheme({
     borderRadius: 10,
   },
   typography: {
-    fontFamily:
-      '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+    fontFamily: "'Open Sans', sans-serif",
     h1: {
       fontWeight: 700,
       fontSize: 35,

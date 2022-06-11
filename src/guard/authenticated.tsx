@@ -22,8 +22,9 @@ export const Authenticated: React.FC<{
         query: { backToURL: router.pathname },
       });
     else {
+      const role = data?.roles ? data?.roles[0] : "admin";
       // if the user's role doesn't match, then redirect user to 404 page
-      if (roles && !roles.includes(data.roles[0])) router.replace("/404");
+      if (roles && !roles.includes(role)) router.replace("/404");
       else setVerified(true);
     }
   }, [router.isReady]);

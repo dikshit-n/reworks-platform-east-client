@@ -5,7 +5,7 @@ import {
   AUTH_DATA,
   LOGIN_AUTH_PROPS,
   SEND_OTP_SUBMIT_DATA,
-  SIGNUP_PROPS,
+  SIGNUP_AUTH_PROPS,
   USE_AUTH_OPTIONS,
   VERIFY_OTP_SUBMIT_DATA,
 } from "@/model";
@@ -39,10 +39,7 @@ export function useAuth() {
   ): Promise<AUTH_DATA> {
     return new Promise(async (resolve, reject) => {
       try {
-        const data =
-          "phoneNumber" in loginDetails
-            ? await authApi.loginWithPhoneNumber(loginDetails)
-            : await authApi.loginWithEmail(loginDetails);
+        const data = await authApi.login(loginDetails);
         setCookie(authSetup.tokenAccessor, data.token);
         if (updateRedux) authActions.login(data);
         resolve(data);
@@ -53,7 +50,7 @@ export function useAuth() {
   }
 
   function signup(
-    signupDetails: SIGNUP_PROPS,
+    signupDetails: SIGNUP_AUTH_PROPS,
     { updateRedux = true }: USE_AUTH_OPTIONS = {}
   ): Promise<AUTH_DATA> {
     return new Promise(async (resolve, reject) => {
@@ -62,28 +59,6 @@ export function useAuth() {
         setCookie(authSetup.tokenAccessor, data.token);
         if (updateRedux) authActions.login(data);
         resolve(data);
-      } catch (err) {
-        reject(err);
-      }
-    });
-  }
-
-  function sendOTP(submitData: SEND_OTP_SUBMIT_DATA): Promise<void> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        await authApi.sendOTP(submitData);
-        resolve();
-      } catch (err) {
-        reject(err);
-      }
-    });
-  }
-
-  function verifyOTP(submitData: VERIFY_OTP_SUBMIT_DATA): Promise<void> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        await authApi.verifyOTP(submitData);
-        resolve();
       } catch (err) {
         reject(err);
       }
@@ -108,8 +83,6 @@ export function useAuth() {
 
   const authUsableData = {
     ...auth,
-    sendOTP,
-    verifyOTP,
     login,
     signup,
     logout,

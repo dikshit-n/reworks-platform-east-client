@@ -14,12 +14,12 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (!router.isReady) return;
-    if (data)
+    if (data) {
+      const role = data?.roles ? data?.roles[0] : "admin";
       router.replace(
-        `${
-          rbacSetup.homePage[data?.roles[0] as keyof typeof rbacSetup.homePage]
-        }`
+        `${rbacSetup.homePage[role as keyof typeof rbacSetup.homePage]}`
       );
+    }
   }, [router.isReady]);
 
   return <div>Loading...</div>;

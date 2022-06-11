@@ -33,6 +33,7 @@ const ContentContainer = styled(Box)(
   height: calc(100vh - ${layoutSetup.header.height});
   max-height: calc(100vh - ${layoutSetup.header.height});
   padding: 0 20px;
+  overflow: auto;
 
   // margin approach
   // ${theme.breakpoints.up("lg")} {

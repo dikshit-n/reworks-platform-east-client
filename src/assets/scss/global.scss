@@ -8,3 +8,26 @@ body {
 .dark-mode-toggler {
   overflow: visible !important;
 }
+
+html, .custom-scrollbar, * {
+  // overflow-y: overlay;
+  &::-webkit-scrollbar {
+    width: 10px;
+    margin-right: -10px;
+    position: absolute;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 5px;
+    background: rgb(225, 225, 225);
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    &:hover {
+      transform: scale(0.1);
+      background: rgb(213, 213, 213);
+    }
+  }
+}
