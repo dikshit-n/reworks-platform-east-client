@@ -104,6 +104,7 @@ interface UrlObject {
 
 export interface CUSTOM_ICON_BUTTON_PROPS
   extends Omit<IconButtonProps, "href"> {
+  loading?: boolean;
   href?:
     | UrlObject
     | string
@@ -135,6 +136,7 @@ export interface CUSTOM_POPOVER_PROPS
   triggerContainerProps?: Omit<BoxProps, "ref">;
   open?: boolean;
   closeOnClick?: boolean;
+  disabled?: boolean;
 }
 
 // form-elements / recursive-container
@@ -186,6 +188,7 @@ export interface FILE_INPUT_PROPS {
   onChange?: (e: File | null) => any;
   value?: File | null;
   supportedFormats?: Array<string>;
+  onError?: (err: string) => any;
   downloadName?: string;
   isDownloadable?: boolean;
   className?: string;

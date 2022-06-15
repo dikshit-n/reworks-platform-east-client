@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box, styled, Typography } from "@mui/material";
 import { layoutSetup, LAYOUT_NAMES } from "@/layouts";
+import { AsyncDivSpinner } from "../spinners";
 
 const TableComponentContainer = styled(Box)`
   box-sizing: border-box;
@@ -32,11 +33,12 @@ const StyledTableContainer = styled(TableContainer)`
 `;
 
 const StyledTableHeader = styled(Box)`
-  width: 100%;
+  width: calc(100% - 40px);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 20px 10px;
+  box-sizing: border-box;
 `;
 
 const StyledPaginationContainer = styled(Box)`
@@ -47,13 +49,27 @@ const StyledPaginationContainer = styled(Box)`
   height: 80px;
 `;
 
+const StyledEmptyMessage = styled(Typography)`
+  text-align: center;
+  width: 100%;
+  padding: 20px 0;
+`;
+
+const StyledTableCell = styled(TableCell)(
+  ({ theme }) => `
+    color: unset;
+    // background-color: ${theme}
+`
+);
+
 export function FixedHeaderTable(props) {
-  const { columns, data, title } = props;
+  const { columns, data, title, actions, loading, emptyMessage } = props;
 
   return (
     <TableComponentContainer>
       <StyledTableHeader>
         <Typography variant="h1">{title}</Typography>
+        {actions}
       </StyledTableHeader>
       <StyledTableContainer component={Paper}>
         <Table stickyHeader>
@@ -64,18 +80,27 @@ export function FixedHeaderTable(props) {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {data.map((row, index) => (
-              <TableRow key={index}>
-                {columns.map((cell) => (
-                  <TableCell component="th" scope="row">
-                    {row[cell.accessor]}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
+          {!loading && data.length > 0 ? (
+            <TableBody>
+              {data.map((row, index) => (
+                <TableRow key={index}>
+                  {columns.map((cell) => (
+                    <TableCell component="th" scope="row">
+                      {row[cell.accessor]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          ) : null}
         </Table>
+        {loading ? (
+          <AsyncDivSpinner />
+        ) : data.length === 0 ? (
+          <StyledEmptyMessage variant="h4">
+            {emptyMessage || "No data found"}
+          </StyledEmptyMessage>
+        ) : null}
       </StyledTableContainer>
       <StyledPaginationContainer></StyledPaginationContainer>
     </TableComponentContainer>

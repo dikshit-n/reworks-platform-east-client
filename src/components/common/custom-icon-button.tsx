@@ -1,10 +1,11 @@
 import { CUSTOM_ICON_BUTTON_PROPS } from "@/model";
+import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
 import { useRouter } from "next/router";
 
 export const CustomIconButton: React.FC<CUSTOM_ICON_BUTTON_PROPS> = (props) => {
   const { push, replace } = useRouter();
-  const { href, ...rest } = props;
+  const { href, loading, ...rest } = props;
 
   const goto = (route: CUSTOM_ICON_BUTTON_PROPS["href"]) => {
     if (route) {
@@ -24,7 +25,9 @@ export const CustomIconButton: React.FC<CUSTOM_ICON_BUTTON_PROPS> = (props) => {
       color="primary"
       {...rest}
       onClick={
-        href || rest.onClick
+        loading || rest.disabled
+          ? undefined
+          : href || rest.onClick
           ? (e) => {
               if (href) goto(href);
               if (rest.onClick) rest.onClick(e);
@@ -32,7 +35,7 @@ export const CustomIconButton: React.FC<CUSTOM_ICON_BUTTON_PROPS> = (props) => {
           : undefined
       }
     >
-      {rest.children}
+      {loading ? <CircularProgress size="1rem" /> : rest.children}
     </IconButton>
   );
 };

@@ -36,6 +36,7 @@ const FileInput = ({
   style,
   convertToBase64 = true,
   name = "",
+  onError = () => {},
 }) => {
   const [file, setFile] = useState(value);
   const [fileDetails, setFileDetails] = useState(null);
@@ -69,7 +70,9 @@ const FileInput = ({
         setProcessing(false);
       } else {
         setFileDetails(null);
-        setError(`Invalid format. \nSupported formats: ${supportedFormats}`);
+        const errorMessage = `Invalid format. \nSupported formats: ${supportedFormats}`;
+        onError(errorMessage);
+        setError(errorMessage);
       }
     }
   };
@@ -116,11 +119,10 @@ const FileInput = ({
         {processing ? (
           "Processing..."
         ) : isDragActive ? (
-          <p style={{ margin: 0 }}>Drop the files here ...</p>
+          <p style={{ margin: 0 }}>Ready to Drop...</p>
         ) : (
           <p style={{ margin: 0 }}>
-            {fileDetails?.name ||
-              "Click to select file. Or drag and drop file here"}
+            {fileDetails?.name || "Drag & Drop file here"}
           </p>
         )}
       </ChooseFileComponent>

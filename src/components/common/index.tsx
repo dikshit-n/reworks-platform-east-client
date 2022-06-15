@@ -7,3 +7,4 @@ export * from "./justify-between";
 export * from "./flash-message";
 export * from "./responsive-components";
 export * from "./custom-table";
+export * from "./spinners";

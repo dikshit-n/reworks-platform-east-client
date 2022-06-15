@@ -97,3 +97,10 @@ export async function createApiFunction(
     throw err;
   }
 }
+
+export async function handleError(error, customFunction?: Function) {
+  if (error) {
+    if (customFunction) customFunction(error);
+    else window.flash({ message: getError(error).message, variant: "error" });
+  }
+}

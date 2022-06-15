@@ -12,6 +12,7 @@ export const CustomPopover: React.FC<CUSTOM_POPOVER_PROPS> = (props) => {
     trigger,
     triggerContainerProps,
     closeOnClick = true,
+    disabled,
     ...rest
   } = props;
   useOutsideClick(popoverRef, () => setOpen(false));
@@ -22,9 +23,11 @@ export const CustomPopover: React.FC<CUSTOM_POPOVER_PROPS> = (props) => {
         {...triggerContainerProps}
         ref={popoverRef}
         onClick={(event) => {
-          if (triggerContainerProps?.onClick)
-            triggerContainerProps?.onClick(event);
-          setOpen((prev) => !prev);
+          if (!disabled) {
+            if (triggerContainerProps?.onClick)
+              triggerContainerProps?.onClick(event);
+            setOpen(true);
+          }
         }}
       >
         {trigger?.component}
@@ -36,6 +39,9 @@ export const CustomPopover: React.FC<CUSTOM_POPOVER_PROPS> = (props) => {
         disableScrollLock
         onClick={(event) => {
           if (props.onClick) props.onClick(event);
+          if (closeOnClick) setOpen(false);
+        }}
+        onDrop={() => {
           if (closeOnClick) setOpen(false);
         }}
         onClose={(params, reason) => {

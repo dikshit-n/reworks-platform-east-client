@@ -1,4 +1,4 @@
 export * from "./auth";
-export * from "./view_data";
+export * from "./products";
 
 // don't export role specific apis
