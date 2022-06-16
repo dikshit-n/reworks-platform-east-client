@@ -1,5 +1,3 @@
-import { CustomIconButton } from "@/components";
-import { defaultReduceAnimations } from "@mui/lab/CalendarPicker/CalendarPicker";
 import { MenuItem, styled, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -107,7 +105,7 @@ export const ProductCard = (props) => {
       return defaultImage;
     } catch (err) {
       console.log(err);
-      return defaultReduceAnimations;
+      return defaultImage;
     }
   };
 
