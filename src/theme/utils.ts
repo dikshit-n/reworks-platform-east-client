@@ -75,6 +75,18 @@ declare module "@mui/material/styles" {
           100: string;
         };
       };
+      text?: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+      secondaryText?: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
       secondary: {
         lighter: string;
         light: string;

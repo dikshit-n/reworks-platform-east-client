@@ -17,11 +17,6 @@ export const adminRoutes: SIDEBAR_MENU_ITEMS_STRUCTURE = [
         link: "/admin",
         icon: <ListIcon />,
       },
-      {
-        label: "Upload Products",
-        link: "/admin/upload_products",
-        icon: <CloudUploadIcon />,
-      },
     ],
   },
 ];

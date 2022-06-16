@@ -30,6 +30,7 @@ const StyledTableContainer = styled(TableContainer)`
   width: calc(100% - 40px);
   height: fit-content;
   max-height: 100%;
+  overflow: overlay;
 `;
 
 const StyledTableHeader = styled(Box)`
@@ -39,6 +40,7 @@ const StyledTableHeader = styled(Box)`
   justify-content: space-between;
   padding: 20px 10px;
   box-sizing: border-box;
+  z-index: 1;
 `;
 
 const StyledPaginationContainer = styled(Box)`

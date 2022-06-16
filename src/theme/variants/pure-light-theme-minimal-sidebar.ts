@@ -10,7 +10,8 @@ const themeColors = {
   warning: "#FFA319",
   error: "#FF1943",
   info: "#33C2FF",
-  black: "#223354",
+  black: "#121212",
+  secondaryBlack: "#403f3f",
   white: "#ffffff",
   primaryAlt: "#000C57",
   primaryBackground: "#1C6DD0",
@@ -93,6 +94,18 @@ const colors = {
       70: alpha(themeColors.black, 0.7),
       100: themeColors.black,
     },
+  },
+  text: {
+    lighter: lighten(themeColors.black, 0.85),
+    light: lighten(themeColors.black, 0.25),
+    main: themeColors.black,
+    dark: darken(themeColors.black, 0.2),
+  },
+  secondaryText: {
+    lighter: lighten(themeColors.secondaryBlack, 0.85),
+    light: lighten(themeColors.secondaryBlack, 0.25),
+    main: themeColors.secondaryBlack,
+    dark: darken(themeColors.secondaryBlack, 0.2),
   },
   secondary: {
     lighter: lighten(themeColors.secondary, 0.85),

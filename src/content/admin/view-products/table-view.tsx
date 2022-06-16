@@ -1,7 +1,7 @@
 import {
-  AsyncDivSpinner,
   CustomIconButton,
   CustomPopover,
+  FixedHeaderTable,
   RecursiveContainer,
   TableActionsWrapper,
 } from "@/components";
@@ -13,39 +13,6 @@ import { handleError, parseCSVFile } from "@/utils";
 import { useEffect, useState } from "react";
 import { productsApi } from "@/api";
 import { productDetailHeader } from "@/data";
-import { ProductCard } from "./components";
-import { Box, styled, Typography } from "@mui/material";
-import { DUMMY_DATA } from "./dummy-data";
-
-const ProductsContainerWrapper = styled(Box)(
-  ({ theme }) => `
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  max-height: 100%;
-  min-height: 100%;
-  box-sizing: border-box !important;
-  .search-bar {
-    position: sticky;
-    top: 0;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-  .pagination {
-    position: sticky;
-    bottom: 0;
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-`
-);
-
-const EmptyMessage = styled(Typography)`
-  text-align: center;
-  width: 100%;
-  padding: 10px 0;
-`;
 
 export const ViewProductsContent: React.FC = () => {
   const [products, setProducts] = useState([]);
@@ -53,7 +20,7 @@ export const ViewProductsContent: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // loadProducts();
+    loadProducts();
   }, []);
 
   const formik = useFormik({
@@ -139,18 +106,12 @@ export const ViewProductsContent: React.FC = () => {
   );
 
   return (
-    <ProductsContainerWrapper>
-      <div>Searchbox</div>
-      {DUMMY_DATA.map((el) => (
-        <ProductCard {...el} />
-      ))}
-      {/* {loading ? (
-        <AsyncDivSpinner />
-      ) : products.length === 0 ? (
-        <EmptyMessage variant="h4">No Items Found</EmptyMessage>
-      ) : (
-      )} */}
-      <div className="pagination">Pagination</div>
-    </ProductsContainerWrapper>
+    <FixedHeaderTable
+      loading={loading}
+      title="Products"
+      actions={actions}
+      columns={COLUMNS}
+      data={products}
+    />
   );
 };
