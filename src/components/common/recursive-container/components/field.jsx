@@ -26,6 +26,7 @@ import { TimeInput } from "./time-input";
 import { RecursiveContainer } from "../../recursive-container";
 import { CustomNumberInput } from "./number-input";
 import { MaskedText } from "./masked-text";
+import { DebounceInput } from "./debounce-input";
 
 export const Field = (props) => {
   const { validationSchema, formik, type, name, addon, onChange, ...rest } =
@@ -49,6 +50,32 @@ export const Field = (props) => {
     case "text":
       return (
         <TextField
+          {...rest}
+          value={value}
+          label={rest.label && (isRequired ? `${rest.label} *` : rest.label)}
+          name={name}
+          type="text"
+          error={error && touched}
+          helperText={
+            error && touched ? error || rest.helperText : rest.helperText
+          }
+          onChange={(e) => {
+            if (onChange) onChange(e);
+            formik.handleChange(e);
+          }}
+          InputProps={{
+            [`${addonPosition}Adornment`]: addon && (
+              <InputAdornment position={addonPosition}>
+                {addon.component}
+              </InputAdornment>
+            ),
+            ...rest.InputProps,
+          }}
+        />
+      );
+    case "debounce-text":
+      return (
+        <DebounceInput
           {...rest}
           value={value}
           label={rest.label && (isRequired ? `${rest.label} *` : rest.label)}

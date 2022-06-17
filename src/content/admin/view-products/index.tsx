@@ -10,13 +10,15 @@ import BackupIcon from "@mui/icons-material/Backup";
 import { useFormik } from "formik";
 import { CONFIG_TYPE } from "@/model";
 import { handleError, parseCSVFile } from "@/utils";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { productsApi } from "@/api";
 import { productDetailHeader } from "@/data";
 import { ProductCard } from "./components";
 import { Box, Paper, styled, Typography } from "@mui/material";
 import { DUMMY_DATA } from "./dummy-data";
 import SearchIcon from "@mui/icons-material/Search";
+import queryString from "query-string";
+import { useRouter } from "next/router";
 
 const ProductsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -41,6 +43,7 @@ const ProductsHeader = styled(Box)`
   margin-left: -10px;
   display: grid;
   grid-template-columns: 1fr auto;
+  gap: 10px;
   z-index: 1;
   padding: 0 10px;
   box-shadow: none;
@@ -63,6 +66,7 @@ export const ViewProductsContent: React.FC = () => {
   const [products, setProducts] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     // loadProducts();
@@ -80,7 +84,10 @@ export const ViewProductsContent: React.FC = () => {
   const loadProducts = async () => {
     setLoading(true);
     try {
-      const products = await productsApi.fetchProducts();
+      const productKey = queryString.parse(`${router.query}`);
+      console.log(productKey);
+      const products = [];
+      // const products =  await productsApi.fetchProducts();
       setProducts(products);
     } catch (err) {
       handleError(err);
@@ -88,7 +95,13 @@ export const ViewProductsContent: React.FC = () => {
     setLoading(false);
   };
 
-  const handleSearch = (value) => {};
+  const handleSearch = ({ target: { value } }) => {
+    const searchString = queryString.stringify(
+      { productId: value },
+      { skipNull: true, skipEmptyString: true }
+    );
+    router.replace(`/admin${searchString ? `?${searchString}` : ""}`);
+  };
 
   const handleFileUpload = async (file) => {
     setUploading(true);
@@ -123,8 +136,8 @@ export const ViewProductsContent: React.FC = () => {
   const searchBar: CONFIG_TYPE = [
     {
       name: "searchValue",
+      type: "debounce-text",
       onChange: handleSearch,
-      className: "search-bar",
       placeholder: "Search Products",
       addon: {
         position: "start",

@@ -3,7 +3,6 @@ import type {
   ReactElement,
   ChangeEvent,
   JSXElementConstructor,
-  Component,
   ReactNode,
 } from "react";
 // mui
@@ -323,6 +322,9 @@ interface CONFIG_BASE {
 interface TEXT_FIELD_TYPE {
   type?: "text" | "password" | "email" | "color" | "";
 }
+interface DEBOUNCE_TEXT_FIELD_TYPE {
+  type?: "debounce-text";
+}
 interface PHONE_FIELD_TYPE {
   type?: "phone";
 }
@@ -372,6 +374,18 @@ type TEXT_FIELD_PROPS = Overwrite<
   TEXT_FIELD_TYPE
 > & {
   // other manually defined properties
+  addon?: null | {
+    position?: "end" | "start" | null;
+    component: null | ReactElement;
+  };
+};
+// debounce-text field
+type DEBOUNCE_TEXT_FIELD_PROPS = Overwrite<
+  TextFieldProps & CONFIG_BASE,
+  DEBOUNCE_TEXT_FIELD_TYPE
+> & {
+  // other manually defined properties
+  delay?: number | null;
   addon?: null | {
     position?: "end" | "start" | null;
     component: null | ReactElement;
@@ -477,6 +491,7 @@ type MASKED_TEXT_FIELD_PROPS = Overwrite<
 // field props
 export type FIELD_PROPS = (
   | TEXT_FIELD_PROPS
+  | DEBOUNCE_TEXT_FIELD_PROPS
   | PHONE_FIELD_PROPS
   | SELECT_FIELD_PROPS
   | FILE_INPUT_FIELD_PROPS
