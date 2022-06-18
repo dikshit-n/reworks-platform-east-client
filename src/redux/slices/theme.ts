@@ -1,14 +1,14 @@
-import { THEME } from "@/theme";
+import { THEME, THEME_NAMES } from "@/theme";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const getTheme = () => {
   try {
     return (
       (window.localStorage.getItem("theme") as THEME) ||
-      "pure-light-theme-minimal-sidebar"
+      THEME_NAMES.PureLightThemeMinimalSidebar
     );
   } catch {
-    return "pure-light-theme-minimal-sidebar";
+    return THEME_NAMES.PureLightThemeMinimalSidebar;
   }
 };
 const initialState: THEME = getTheme();
