@@ -528,7 +528,7 @@ export interface RECURSIVE_CONTAINER_PROPS {
     React.DetailedHTMLProps<
       React.HTMLAttributes<HTMLDivElement>,
       HTMLDivElement
-    > & { children: ReactElement<any, any> }
+    > & { childrenContainer: ReactElement<any, any> }
   >;
 }
 

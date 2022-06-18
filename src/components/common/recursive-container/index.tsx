@@ -68,7 +68,7 @@ export const RecursiveContainer: React.FC<RECURSIVE_CONTAINER_PROPS> = (
   return FormContainer ? (
     <FormContainer
       {...formContainerProps}
-      children={recursiveContainer} // recursiveContainer form is given to use your own styles and functionalities by wrapping it inside your own elements.
+      childrenContainer={recursiveContainer} // recursiveContainer form is given to use your own styles and functionalities by wrapping it inside your own elements.
     />
   ) : (
     recursiveContainer

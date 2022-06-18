@@ -15,7 +15,7 @@ export const DateInput = (props) => {
 
   if (renderInput) {
     if (renderInput.props)
-      renderInput = (params) => (
+      renderInput = function renderComponent(params) {
         <TextField
           fullWidth
           variant="outlined"
@@ -26,10 +26,10 @@ export const DateInput = (props) => {
           my={props.my}
           helperText={helperText}
           error={error}
-        />
-      );
+        />;
+      };
   } else {
-    renderInput = (params) => (
+    renderInput = function renderComponent(params) {
       <TextField
         fullWidth
         variant="outlined"
@@ -39,8 +39,8 @@ export const DateInput = (props) => {
         my={props.my}
         helperText={helperText}
         error={error}
-      />
-    );
+      />;
+    };
   }
 
   const getValue = () => {

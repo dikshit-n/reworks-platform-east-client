@@ -81,8 +81,8 @@ export function FixedHeaderTable(props) {
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              {columns.map((cell) => (
-                <TableCell>{cell.Header}</TableCell>
+              {columns.map((cell, index) => (
+                <TableCell key={index}>{cell.Header}</TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -90,8 +90,8 @@ export function FixedHeaderTable(props) {
             <TableBody>
               {data.map((row, index) => (
                 <TableRow key={index}>
-                  {columns.map((cell) => (
-                    <TableCell component="th" scope="row">
+                  {columns.map((cell, ind) => (
+                    <TableCell key={ind} component="th" scope="row">
                       {row[cell.accessor]}
                     </TableCell>
                   ))}
