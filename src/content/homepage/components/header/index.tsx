@@ -19,6 +19,7 @@ const StyledHeader = styled(Paper)`
   gap: 20px;
   padding: 10px 20px;
   border-radius: 0;
+  z-index: 1;
 `;
 
 export const Header = () => {

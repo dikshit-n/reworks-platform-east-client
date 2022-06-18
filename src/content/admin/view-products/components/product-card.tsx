@@ -1,6 +1,8 @@
 import { MenuItem, styled, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { TagsWrapper } from "@/components";
+import { DefaultProductAvatarSrc } from "@/data";
 
 const StyledProductCardWrapper = styled(Paper)(
   ({ theme }) => `
@@ -21,7 +23,6 @@ const StyledProductCardWrapper = styled(Paper)(
     .image {
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
-        background-image: url('/img/default-product-avatar.png');
         background-position: center;
         background-size: cover;
         overflow: hidden;
@@ -43,40 +44,6 @@ const StyledProductCardWrapper = styled(Paper)(
             }
             .decription {
                 color: ${theme.colors.secondaryText};
-            }
-        }
-        .tags {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 5px;
-            .tag {
-                display: flex;
-                width: fit-content;
-                flex-direction: row;
-                align-items: center;
-                border-radius: 10px;
-                overflow: hidden;
-                box-shadow: 4px 4px 5px 0 #c2c2c2; 
-                .tag-name {
-                    background-color: ${theme.colors.primary.main};
-                    padding: 5px 10px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100%;
-                    > small {
-                        color: white;
-                        margin: 0;
-                    }
-                }
-                .tag-content {
-                    padding: 5px 10px;
-                    > small {
-                        margin: 0;
-                    }
-                }
             }
         }
     }
@@ -106,13 +73,12 @@ export const ProductCard = (props) => {
   const { readable_name, image_url, item_desc, item_size, productId } = props;
 
   const loadImage = (url) => {
-    const defaultImage = "/img/default-product-avatar.png";
     try {
       if (url.startsWith("http")) return url;
-      return defaultImage;
+      return DefaultProductAvatarSrc;
     } catch (err) {
       console.log(err);
-      return defaultImage;
+      return DefaultProductAvatarSrc;
     }
   };
 
@@ -130,10 +96,10 @@ export const ProductCard = (props) => {
             {item_desc}
           </Typography>
         </div>
-        <div className="tags">
+        <TagsWrapper>
           <Tag name="size" value={item_size} />
           <Tag name="#id" value={productId} />
-        </div>
+        </TagsWrapper>
       </div>
       <div className="actions">
         <MenuItem
