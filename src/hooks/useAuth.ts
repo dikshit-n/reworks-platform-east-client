@@ -4,10 +4,8 @@ import { useSelector, useActions } from "@/hooks";
 import {
   AUTH_DATA,
   LOGIN_AUTH_PROPS,
-  SEND_OTP_SUBMIT_DATA,
   SIGNUP_AUTH_PROPS,
   USE_AUTH_OPTIONS,
-  VERIFY_OTP_SUBMIT_DATA,
 } from "@/model";
 import { deleteCookie, getCookie, setCookie } from "@/utils";
 

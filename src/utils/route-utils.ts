@@ -1,3 +1,5 @@
+import queryString from "query-string";
+
 export const isActiveRoute = ({
   path,
   route,
@@ -22,4 +24,17 @@ const getValidRouteName = (pathname: string) => {
     return newPathname;
   }
   return pathname;
+};
+
+export const getSearchString = (
+  object: Record<string, any>,
+  options?: queryString.StringifyOptions
+) => {
+  let searchString = queryString.stringify(object, {
+    skipNull: true,
+    skipEmptyString: true,
+    ...options,
+  });
+  searchString = `${searchString ? `?${searchString}` : ""}`;
+  return searchString;
 };

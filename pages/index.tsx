@@ -1,10 +1,11 @@
 import { rbacSetup } from "@/data";
-import { Authenticated } from "@/guard";
+import { Public } from "@/guard";
 import { useAuth } from "@/hooks";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { HomePageLayout } from "@/layouts";
 import { useEffect } from "react";
+import { HomePageContent } from "@/content/homepage";
 
 // either a public page / redirect to login page
 
@@ -14,21 +15,21 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (!router.isReady) return;
-    if (data) {
-      const role = data?.roles ? data?.roles[0] : "admin";
-      router.replace(
-        `${rbacSetup.homePage[role as keyof typeof rbacSetup.homePage]}`
-      );
-    }
+    // if (data) {
+    //   const role = data?.roles ? data?.roles[0] : "admin";
+    //   router.replace(
+    //     `${rbacSetup.homePage[role as keyof typeof rbacSetup.homePage]}`
+    //   );
+    // }
   }, [router.isReady]);
 
-  return <div>Loading...</div>;
+  return <HomePageContent />;
 };
 
 Home.getLayout = (page) => (
-  <Authenticated>
+  <Public>
     <HomePageLayout>{page}</HomePageLayout>
-  </Authenticated>
+  </Public>
 );
 
 export default Home;

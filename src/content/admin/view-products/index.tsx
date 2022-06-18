@@ -9,7 +9,7 @@ import Tooltip from "@mui/material/Tooltip";
 import BackupIcon from "@mui/icons-material/Backup";
 import { useFormik } from "formik";
 import { CONFIG_TYPE } from "@/model";
-import { handleError, parseCSVFile } from "@/utils";
+import { getSearchString, handleError, parseCSVFile } from "@/utils";
 import { useEffect, useState } from "react";
 import { productsApi } from "@/api";
 import { productDetailHeader } from "@/data";
@@ -96,11 +96,8 @@ export const ViewProductsContent: React.FC = () => {
   };
 
   const handleSearch = ({ target: { value } }) => {
-    const searchString = queryString.stringify(
-      { productId: value },
-      { skipNull: true, skipEmptyString: true }
-    );
-    router.replace(`/admin${searchString ? `?${searchString}` : ""}`);
+    const searchString = getSearchString({ productId: value });
+    router.replace(`/admin${searchString}`);
   };
 
   const handleFileUpload = async (file) => {

@@ -8,12 +8,19 @@ const StyledProductCardWrapper = styled(Paper)(
     grid-template-columns: 200px 1fr 100px;
     border-radius: 20px;
     margin: 10px 0;
-    min-height: 150px;
     height: fit-content;
-    overflow: hidden;
     width: 100%;
-    // width: calc(100% - 100px);
+    ${theme.breakpoints.down("md")} {
+      grid-template-rows: 150px auto;
+      grid-template-columns: unset;
+      .image {
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 0 !important;
+      }
+    }
     .image {
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
         background-image: url('/img/default-product-avatar.png');
         background-position: center;
         background-size: cover;

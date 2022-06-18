@@ -13,6 +13,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { IconButton } from "@mui/material";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import DarkModeToggle from "react-dark-mode-toggle";
+import { AppLogoSrc } from "@/data";
 
 const StyledHeader = styled(Box)(
   ({ theme }) => `
@@ -68,11 +69,7 @@ export const Header: React.FC<MINIMAL_SIDEBAR_HEADER_PROPS> = (props) => {
             padding: "0 20px",
           }}
         >
-          <Image
-            width={50}
-            height={50}
-            src={brandLogo || "/img/app-logo.png"}
-          />
+          <Image width={50} height={50} src={brandLogo || AppLogoSrc} />
           <HideAboveMD>
             {props.extraComponent || (
               <IconButton disableRipple onClick={props.profileProps?.logout}>
