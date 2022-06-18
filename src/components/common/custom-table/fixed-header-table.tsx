@@ -25,7 +25,11 @@ const TableComponentContainer = styled(Box)`
   grid-template-rows: auto 1fr auto;
 `;
 
-const StyledTableContainer = styled(TableContainer)`
+const StyledTableContainer = styled((props: any) => (
+  <TableContainer {...props} component={Paper}>
+    {props.children}
+  </TableContainer>
+))`
   box-sizing: border-box;
   width: calc(100% - 40px);
   height: fit-content;
@@ -73,7 +77,7 @@ export function FixedHeaderTable(props) {
         <Typography variant="h1">{title}</Typography>
         {actions}
       </StyledTableHeader>
-      <StyledTableContainer component={Paper}>
+      <StyledTableContainer>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
