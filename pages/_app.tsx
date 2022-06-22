@@ -8,7 +8,7 @@ import { Public } from "@/guard";
 import { ThemeProvider } from "@/theme";
 import "@/assets/scss/global.scss";
 import { createEventEmitters } from "@/utils";
-import { FlashMessage } from "@/components";
+import { CustomModal, FlashMessage } from "@/components";
 import { SnackbarProvider } from "notistack";
 import { useScrollTop } from "@/hooks";
 import Router from "next/router";
@@ -19,6 +19,10 @@ import Head from "next/head";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import createEmotionCache from "src/createEmotionCache";
 
+// to switch between light and dark mode (for future implementation)
+// and for some font style changes
+import CssBaseline from "@mui/material/CssBaseline";
+
 // the progress bar at the top of the application when a page is loading
 import nProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -27,7 +31,7 @@ import "nprogress/nprogress.css";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { projectSetup } from "@/data";
 
-// to create seperate layouts for each page
+// to wrap guards for each page
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -77,6 +81,8 @@ function MyApp({
                 horizontal: "right",
               }}
             >
+              <CssBaseline />
+              <CustomModal />
               <FlashMessage />
               <AuthProvider>
                 {getLayout(<Component {...pageProps} />)}

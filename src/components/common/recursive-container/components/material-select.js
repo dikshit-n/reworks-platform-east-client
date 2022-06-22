@@ -1,6 +1,6 @@
 import {
   uniqId,
-  accessValueByDotNotaion,
+  accessValueByDotNotation,
   convertDropDownObject,
   ignoreEmptyObject,
 } from "@/utils";
@@ -40,7 +40,7 @@ export const MaterialSelect = ({
   // ---------------------- //
 
   let selectedOption = ignoreEmptyObject(
-    formik ? accessValueByDotNotaion(formik.values, name) : value
+    formik ? accessValueByDotNotation(formik.values, name) : value
   );
 
   if (rest.multiple)

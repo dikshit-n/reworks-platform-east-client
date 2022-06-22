@@ -4,7 +4,7 @@ export const convertDropDownObject = ({
   labelAccessor,
   isString = false, // specify this if you want to convert a string to { value: '', label: '' } object and viceversa
   isReverse = false, // specify this if you need your object to be converted from {value, label}(dropdown supportable format) to backend supportable fomat
-  retriveOtherKeys = false // specify this if you need all the keys other than value and label to retrived while choosing an option
+  retriveOtherKeys = false, // specify this if you need all the keys other than value and label to retrived while choosing an option
 }) => {
   if (isString) {
     if (value) {
@@ -22,9 +22,9 @@ export const convertDropDownObject = ({
         finalObject = {
           ...(retriveOtherKeys ? value : {}),
           [valueAccessor]: value.value,
-          [labelAccessor]: value.label
+          [labelAccessor]: value.label,
         };
-        if (valueAccessor !== 'value' && labelAccessor !== 'label') {
+        if (valueAccessor !== "value" && labelAccessor !== "label") {
           delete finalObject.value;
           delete finalObject.label;
         }
@@ -34,18 +34,18 @@ export const convertDropDownObject = ({
       return {
         ...(retriveOtherKeys ? value : {}),
         value: value[valueAccessor],
-        label: value[labelAccessor]
+        label: value[labelAccessor],
       };
     }
     return null;
   }
 };
 
-export const accessValueByDotNotaion = (o, s) => {
+export const accessValueByDotNotation = (o, s) => {
   // console.log(`[${s}]`, o);
-  s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-  s = s.replace(/^\./, ''); // strip a leading dot
-  var a = s.split('.');
+  s = s.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+  s = s.replace(/^\./, ""); // strip a leading dot
+  var a = s.split(".");
   for (var i = 0, n = a.length; i < n; ++i) {
     var k = a[i];
     try {
@@ -62,14 +62,14 @@ export const accessValueByDotNotaion = (o, s) => {
 };
 
 export const convertToObjectAccessingString = (s) => {
-  s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-  s = s.replace(/^\./, ''); // strip a leading dot
+  s = s.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+  s = s.replace(/^\./, ""); // strip a leading dot
   return s;
 };
 
 export const ignoreEmptyObject = (value) => {
   if (value) {
-    if (typeof value === 'object') {
+    if (typeof value === "object") {
       if (
         Object.keys(value).length === 0
         // &&
@@ -84,14 +84,14 @@ export const ignoreEmptyObject = (value) => {
   return null;
 };
 
-export const objectArray = (arr, key = 'id') =>
+export const objectArray = (arr, key = "id") =>
   arr.reduce((acc, cur) => {
     acc[cur[key]] = cur;
     return acc;
   }, {});
 
 export function modifyObjectByDotNotation(object, path, value) {
-  var way = path.replace(/\[/g, '.').replace(/\]/g, '').split('.');
+  var way = path.replace(/\[/g, ".").replace(/\]/g, "").split(".");
   let last = way.pop();
   way.reduce(function (o, k, i, kk) {
     return (o[k] =

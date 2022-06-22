@@ -13,7 +13,7 @@ import {
   Slider,
 } from "@mui/material";
 import { MaterialSelect } from "./material-select";
-import { accessValueByDotNotaion, isRequiredField, uniqId } from "@/utils";
+import { accessValueByDotNotation, isRequiredField, uniqId } from "@/utils";
 import { PhoneInputComponent } from "./phone-input";
 import FileInput from "./file-input";
 import { RadioInput } from "./radio-input";
@@ -36,13 +36,13 @@ export const Field = (props) => {
     validationSchema &&
     (isRequiredField(validationSchema, name) || rest.isRequired);
   const errorValue =
-    formik.errors && accessValueByDotNotaion(formik.errors, name || "");
+    formik.errors && accessValueByDotNotation(formik.errors, name || "");
   const error =
     formik.errors &&
     (typeof errorValue === "object" ? "Invalid Value" : errorValue);
-  let value = accessValueByDotNotaion(formik.values, name || "");
+  let value = accessValueByDotNotation(formik.values, name || "");
   // if (type === "date") value = value && new Date(value);
-  const touched = accessValueByDotNotaion(formik.touched, name || "");
+  const touched = accessValueByDotNotation(formik.touched, name || "");
   const addonPosition = addon && addon.position ? addon.position : "end";
   const id = uniqId();
 
