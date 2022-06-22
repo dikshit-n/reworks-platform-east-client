@@ -1,8 +1,28 @@
 import { useQuery } from "react-query";
-import { UseQueryOptions } from "react-query";
+import type { UseQueryOptions, QueryKey, UseQueryResult } from "react-query";
 
-export const useQueryState = (options: UseQueryOptions) => {
+interface UseStateQueryResult<TData = unknown>
+  extends Omit<UseQueryResult<TData>, "data" | "isLoading"> {
+  foundError: any;
+}
+
+export function useQueryState<
+  TQueryFnData = unknown,
+  TError = unknown,
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey
+>(
+  options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
+): [TData, boolean, UseStateQueryResult<TData>] {
   const { data, isLoading, ...otherOptions } = useQuery(options);
 
-  return [data, isLoading, otherOptions];
-};
+  const returnOptions = {
+    ...otherOptions,
+    foundError:
+      otherOptions.isError && !otherOptions.isFetching
+        ? otherOptions.error
+        : null,
+  };
+
+  return [data, isLoading, returnOptions];
+}

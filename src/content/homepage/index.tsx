@@ -1,8 +1,10 @@
-import { DefaultAvatarSrc } from "@/data";
-import { ignoreEmptyObject } from "@/utils";
-import { styled } from "@mui/material";
+import { productsApi } from "@/api";
+import { AsyncDivSpinner, EmptyMessage } from "@/components";
+import { useQueryState } from "@/hooks";
+import { handleError, ignoreEmptyObject } from "@/utils";
+import { Paper, styled } from "@mui/material";
 import { useRouter } from "next/router";
-import { DUMMY_DATA } from "../admin/view-products/dummy-data";
+import { useEffect } from "react";
 import { CategoryCard, Header, ProductCard } from "./components";
 
 const StyledCategoriesWrapper = styled("div")`
@@ -30,6 +32,16 @@ const StyledProductsWrapper = styled("div")`
 export const HomePageContent = () => {
   const { query } = useRouter();
   const searchQuery = ignoreEmptyObject(query);
+  const [products = [], loading, { refetch }] = useQueryState({
+    queryKey: "products",
+    queryFn: () =>
+      searchQuery ? productsApi.fetchProducts(searchQuery?.searchValue) : [],
+    onError: handleError,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [searchQuery]);
 
   const categories = [
     {
@@ -62,11 +74,21 @@ export const HomePageContent = () => {
   return (
     <>
       <Header />
-      {searchQuery ? (
+      {loading ? (
+        <Paper
+          sx={{ width: "calc(100% - 20px)", margin: "30px auto", padding: 1 }}
+        >
+          <AsyncDivSpinner count={4} />
+        </Paper>
+      ) : searchQuery ? (
         <StyledProductsWrapper>
-          {DUMMY_DATA.map((el, index) => (
-            <ProductCard {...el} key={index} />
-          ))}
+          {products.length === 0 ? (
+            <EmptyMessage sx={{ my: 10 }}>
+              No products found for your search key
+            </EmptyMessage>
+          ) : (
+            products.map((el, index) => <ProductCard {...el} key={index} />)
+          )}
         </StyledProductsWrapper>
       ) : (
         <StyledCategoriesWrapper>

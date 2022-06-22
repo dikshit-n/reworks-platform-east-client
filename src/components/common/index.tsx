@@ -9,3 +9,4 @@ export * from "./responsive-components";
 export * from "./custom-table";
 export * from "./spinners";
 export * from "./tag";
+export * from "./empty-message";

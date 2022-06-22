@@ -9,7 +9,6 @@ padding: 5px;
 display: grid;
 grid-template-rows: 200px auto;
 border-radius: 10px;
-cursor: pointer;
 min-width: 290px;
 flex: 1 0 290px;
 .image {

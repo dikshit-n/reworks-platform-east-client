@@ -79,6 +79,12 @@ export interface SIDEBAR_CONTEXT {
 }
 
 // components
+
+// async-div-spinner
+export interface ASYNC_DIV_SPINNER_PROPS {
+  count?: number;
+}
+
 // custom-icon-button props
 interface TransitionOptions {
   shallow?: boolean;

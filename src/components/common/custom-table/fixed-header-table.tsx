@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import { Box, styled, Typography } from "@mui/material";
 import { layoutSetup, LAYOUT_NAMES } from "@/layouts";
 import { AsyncDivSpinner } from "../spinners";
+import { EmptyMessage } from "@/components";
 
 const TableComponentContainer = styled(Box)`
   box-sizing: border-box;
@@ -55,18 +56,12 @@ const StyledPaginationContainer = styled(Box)`
   height: 80px;
 `;
 
-const StyledEmptyMessage = styled(Typography)`
-  text-align: center;
-  width: 100%;
-  padding: 20px 0;
-`;
-
-const StyledTableCell = styled(TableCell)(
-  ({ theme }) => `
-    color: unset;
-    // background-color: ${theme}
-`
-);
+// const StyledTableCell = styled(TableCell)(
+//   ({ theme }) => `
+//     color: unset;
+//     // background-color: ${theme}
+// `
+// );
 
 export function FixedHeaderTable(props) {
   const { columns, data, title, actions, loading, emptyMessage } = props;
@@ -103,9 +98,9 @@ export function FixedHeaderTable(props) {
         {loading ? (
           <AsyncDivSpinner />
         ) : data.length === 0 ? (
-          <StyledEmptyMessage variant="h4">
+          <EmptyMessage variant="h4">
             {emptyMessage || "No data found"}
-          </StyledEmptyMessage>
+          </EmptyMessage>
         ) : null}
       </StyledTableContainer>
       <StyledPaginationContainer></StyledPaginationContainer>
