@@ -1,10 +1,11 @@
 import { productsApi } from "@/api";
 import { AsyncDivSpinner, EmptyMessage } from "@/components";
-import { useQueryState } from "@/hooks";
+import { authSetup, rbacSetup } from "@/data";
+import { useQueryState, useSelector } from "@/hooks";
 import { handleError, ignoreEmptyObject } from "@/utils";
 import { Paper, styled } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CategoryCard, Header, ProductCard } from "./components";
 
 const StyledCategoriesWrapper = styled("div")`
@@ -30,18 +31,40 @@ const StyledProductsWrapper = styled("div")`
 `;
 
 export const HomePageContent = () => {
-  const { query } = useRouter();
+  const { query, replace } = useRouter();
+  const { data } = useSelector((state) => state.auth);
   const searchQuery = ignoreEmptyObject(query);
   const [products = [], loading, { refetch }] = useQueryState({
     queryKey: "products",
     queryFn: () =>
-      searchQuery ? productsApi.fetchProducts(searchQuery?.searchValue) : [],
+      searchQuery
+        ? productsApi.fetchProductsByText(searchQuery?.searchValue)
+        : [],
     onError: handleError,
   });
+  const [fetchingData, setFetchingData] = useState(loading);
 
   useEffect(() => {
-    refetch();
+    (async () => {
+      setFetchingData(true);
+      await refetch();
+      setFetchingData(loading);
+    })();
   }, [searchQuery]);
+
+  useEffect(() => {
+    setFetchingData(loading);
+  }, [loading]);
+
+  useEffect(() => {
+    if (!!data) {
+      replace(
+        `${
+          rbacSetup.homePage[data?.roles[0] as keyof typeof rbacSetup.homePage]
+        }`
+      );
+    }
+  }, []);
 
   const categories = [
     {
@@ -74,7 +97,7 @@ export const HomePageContent = () => {
   return (
     <>
       <Header />
-      {loading ? (
+      {loading || fetchingData ? (
         <Paper
           sx={{ width: "calc(100% - 20px)", margin: "30px auto", padding: 1 }}
         >

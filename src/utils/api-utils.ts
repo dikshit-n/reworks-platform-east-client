@@ -36,7 +36,7 @@ export const getError = (errorObject: Error | AxiosError) => {
 // creating axios instance
 export const axiosInstance = axios.create({
   // baseURL: "http://localhost:5000",
-  baseURL: "https://obscure-savannah-00929.herokuapp.com/",
+  baseURL: "https://platform-east-server.herokuapp.com/",
 });
 
 // setting token in header for each request

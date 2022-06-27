@@ -70,6 +70,12 @@ export interface LOGIN_DATA {
   password: string;
 }
 
+// user-api
+export interface USER_PROFILE {
+  name: string;
+  email: string;
+}
+
 // contexts
 // sidebar-context
 export interface SIDEBAR_CONTEXT {

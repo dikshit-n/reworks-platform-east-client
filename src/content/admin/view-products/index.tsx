@@ -2,26 +2,31 @@ import {
   AsyncDivSpinner,
   CustomIconButton,
   CustomPopover,
+  EmptyMessage,
   RecursiveContainer,
-  TableActionsWrapper,
 } from "@/components";
 import Tooltip from "@mui/material/Tooltip";
 import BackupIcon from "@mui/icons-material/Backup";
 import { useFormik } from "formik";
 import { CONFIG_TYPE } from "@/model";
-import { getSearchString, handleError, parseCSVFile } from "@/utils";
-import { useEffect, useState } from "react";
+import {
+  downloadLink,
+  getSearchString,
+  handleError,
+  parseCSVFile,
+} from "@/utils";
+import { useState } from "react";
 import { productsApi } from "@/api";
 import { productDetailHeader } from "@/data";
 import { ProductCard } from "./components";
-import { Box, Paper, styled, Typography } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { DUMMY_DATA } from "./dummy-data";
 import SearchIcon from "@mui/icons-material/Search";
-import queryString from "query-string";
 import { useRouter } from "next/router";
+import { useQueryState } from "@/hooks";
+import DownloadIcon from "@mui/icons-material/Download";
 
-const ProductsContainerWrapper = styled(Box)(
-  ({ theme }) => `
+const ProductsContainerWrapper = styled(Box)`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -34,8 +39,7 @@ const ProductsContainerWrapper = styled(Box)(
     width: 100%;
     padding: 10px;
   }
-`
-);
+`;
 
 const ProductsHeader = styled(Box)`
   position: sticky;
@@ -56,21 +60,14 @@ const ProductsHeader = styled(Box)`
   }
 `;
 
-const EmptyMessage = styled(Typography)`
-  text-align: center;
-  width: 100%;
-  padding: 10px 0;
-`;
-
 export const ViewProductsContent: React.FC = () => {
-  const [products, setProducts] = useState([]);
   const [uploading, setUploading] = useState(false);
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    // loadProducts();
-  }, []);
+  const [products, loading, { refetch }] = useQueryState({
+    queryKey: "products",
+    queryFn: () => productsApi.fetchProducts(),
+    onError: handleError,
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -79,21 +76,6 @@ export const ViewProductsContent: React.FC = () => {
     },
     onSubmit: () => {},
   });
-
-  // backend functions
-  const loadProducts = async () => {
-    setLoading(true);
-    try {
-      const productKey = queryString.parse(`${router.query}`);
-      console.log(productKey);
-      const products = [];
-      // const products =  await productsApi.fetchProducts();
-      setProducts(products);
-    } catch (err) {
-      handleError(err);
-    }
-    setLoading(false);
-  };
 
   const handleSearch = ({ target: { value } }) => {
     const searchString = getSearchString({ productId: value });
@@ -112,12 +94,18 @@ export const ViewProductsContent: React.FC = () => {
       // post to backend
       await productsApi.uploadProducts(products);
       window.flash({ message: "Uploaded successfully" });
-      loadProducts();
+      refetch();
     } catch (err) {
       handleError(err);
     }
     setUploading(false);
   };
+
+  const handleSampeDownload = () =>
+    downloadLink({
+      link: "/files/sample-product-upload.csv",
+      name: "Sample Product Upload CSV",
+    });
 
   const uploadFile: CONFIG_TYPE = [
     {
@@ -144,28 +132,37 @@ export const ViewProductsContent: React.FC = () => {
   ];
 
   const actions = (
-    <Tooltip title={uploading ? "Uploading Products" : "Upload Products"}>
-      <span>
-        <CustomPopover
-          disabled={uploading}
-          trigger={{
-            component: (
-              <CustomIconButton loading={uploading}>
-                <BackupIcon />
-              </CustomIconButton>
-            ),
-          }}
-        >
-          <RecursiveContainer
-            formContainerProps={{
-              style: { padding: "5px 20px", width: 200 },
+    <Box sx={{ display: "flex" }}>
+      <Tooltip title="Download Sample">
+        <span>
+          <CustomIconButton onClick={handleSampeDownload}>
+            <DownloadIcon />
+          </CustomIconButton>
+        </span>
+      </Tooltip>
+      <Tooltip title={uploading ? "Uploading Products" : "Upload Products"}>
+        <span>
+          <CustomPopover
+            disabled={uploading}
+            trigger={{
+              component: (
+                <CustomIconButton loading={uploading}>
+                  <BackupIcon />
+                </CustomIconButton>
+              ),
             }}
-            config={uploadFile}
-            formik={formik}
-          />
-        </CustomPopover>
-      </span>
-    </Tooltip>
+          >
+            <RecursiveContainer
+              formContainerProps={{
+                style: { padding: "5px 20px", width: 200 },
+              }}
+              config={uploadFile}
+              formik={formik}
+            />
+          </CustomPopover>
+        </span>
+      </Tooltip>
+    </Box>
   );
 
   return (
@@ -179,11 +176,12 @@ export const ViewProductsContent: React.FC = () => {
           <ProductCard {...el} />
         ))}
         {/* {loading ? (
-        <AsyncDivSpinner />
-      ) : products.length === 0 ? (
-        <EmptyMessage variant="h4">No Items Found</EmptyMessage>
-      ) : (
-      )} */}
+          <AsyncDivSpinner />
+        ) : products.length === 0 ? (
+          <EmptyMessage variant="h4">No Items Found</EmptyMessage>
+        ) : (
+          products.map((el, index) => <ProductCard {...el} />)
+        )} */}
         <div className="pagination">Pagination</div>
       </ProductsContainerWrapper>
     </>

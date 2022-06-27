@@ -1,7 +1,10 @@
 import { axiosInstance, createApiFunction } from "@/utils";
 
 class ProductsApi {
-  fetchProducts(searchKey: string): Promise<Array<any>> {
+  fetchProducts(): Promise<Array<any>> {
+    return createApiFunction(() => axiosInstance.get(`/products`));
+  }
+  fetchProductsByText(searchKey: string): Promise<Array<any>> {
     return createApiFunction(() =>
       axiosInstance.post(`/products/search`, { searchKey })
     );

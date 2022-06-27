@@ -27,3 +27,11 @@ export async function parseCSVFile(
     });
   });
 }
+
+export const downloadLink = ({ link, name }) => {
+  let aTag = document.createElement("a");
+  aTag.href = link;
+  aTag.target = "_blank";
+  aTag.download = name;
+  aTag.click();
+};
