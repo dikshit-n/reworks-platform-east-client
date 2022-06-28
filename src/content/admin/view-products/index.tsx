@@ -64,10 +64,12 @@ const ProductsHeader = styled(Box)`
 export const ViewProductsContent: React.FC = () => {
   const [uploading, setUploading] = useState(false);
   const router = useRouter();
+  const page = `${router.query?.page || 1}`;
   const [products, loading, { refetch }] = useQueryState({
-    queryKey: "products",
-    queryFn: () => productsApi.fetchProducts(),
+    queryKey: ["products", page],
+    queryFn: () => productsApi.fetchProducts(page),
     onError: handleError,
+    keepPreviousData: true,
   });
 
   const formik = useFormik({
