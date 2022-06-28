@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import { LoginForm } from "./login-form";
 import { CustomButton } from "@/components";
 import { AppLogoExtendedSrc } from "@/data";
+import { useRouter } from "next/router";
 
 const LoginPageWrapper = styled(Grid)`
   width: 100vw;
@@ -47,6 +48,8 @@ const LoginCardWrapper = styled(Card)(
 );
 
 export const LoginContent: React.FC = () => {
+  const { pathname } = useRouter();
+  console.log(pathname);
   return (
     <LoginPageWrapper container>
       <LoginCardWrapper>

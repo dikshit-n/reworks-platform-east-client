@@ -1,6 +1,7 @@
 import {
   AsyncDivSpinner,
   CustomIconButton,
+  CustomPagination,
   CustomPopover,
   EmptyMessage,
   RecursiveContainer,
@@ -182,7 +183,9 @@ export const ViewProductsContent: React.FC = () => {
         ) : (
           products.map((el, index) => <ProductCard {...el} />)
         )} */}
-        <div className="pagination">Pagination</div>
+        <div className="pagination">
+          <CustomPagination count={10} />
+        </div>
       </ProductsContainerWrapper>
     </>
   );

@@ -19,6 +19,7 @@ import type { FormControlLabelProps } from "@mui/material/FormControlLabel";
 import type { RadioProps } from "@mui/material/Radio";
 import type { RadioGroupProps } from "@mui/material/RadioGroup";
 import type { FormGroupProps } from "@mui/material/FormGroup";
+import type { PaginationProps } from "@mui/material/Pagination";
 import type { DatePickerProps } from "@mui/lab/DatePicker/DatePicker";
 import type { DateTimePickerProps } from "@mui/lab/DateTimePicker/DateTimePicker";
 import type { TimePickerProps } from "@mui/lab/TimePicker/TimePicker";
@@ -85,6 +86,13 @@ export interface SIDEBAR_CONTEXT {
 }
 
 // components
+
+// custom-pagination
+export interface CUSTOM_PAGINATION_PROPS extends Omit<PaginationProps, "page"> {
+  to?: string;
+  page?: string | number;
+  pageAccessor?: string;
+}
 
 // async-div-spinner
 export interface ASYNC_DIV_SPINNER_PROPS {
