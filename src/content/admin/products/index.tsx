@@ -89,10 +89,9 @@ export const ViewProductsContent: React.FC = () => {
     setUploading(true);
     try {
       // extract values from the file
-      const result = await parseCSVFile(file, {
+      const { data: products } = await parseCSVFile(file, {
         transformHeader: (header) => productDetailHeader[header],
       });
-      const products = result.data;
       formik.resetForm({ values: { ...formik.values, productsCSV: null } });
       // post to backend
       await productsApi.uploadProducts(products);

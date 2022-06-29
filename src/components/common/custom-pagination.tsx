@@ -2,9 +2,8 @@ import { CUSTOM_PAGINATION_PROPS } from "@/model";
 import PaginationItem from "@mui/material/PaginationItem";
 import Pagination from "@mui/material/Pagination";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { getSearchString } from "@/utils";
-import { CustomLink } from "./custom-link";
+import { CustomLink } from "@/components";
 
 export const CustomPagination: React.FC<CUSTOM_PAGINATION_PROPS> = (props) => {
   const { pathname, query } = useRouter();

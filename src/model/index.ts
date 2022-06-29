@@ -77,6 +77,21 @@ export interface USER_PROFILE {
   email: string;
 }
 
+export type USERS = USER_DETAILS[];
+
+export interface ADD_USER {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface USER_DETAILS {
+  name: string;
+  email: string;
+  _id: string;
+}
+
 // contexts
 // sidebar-context
 export interface SIDEBAR_CONTEXT {
@@ -648,8 +663,12 @@ export interface MODAL_EVENT_PROPS_2 extends CONFIRMATION_MODAL_PROPS {
 export type MODAL_EVENT_PROPS = MODAL_EVENT_PROPS_1 | MODAL_EVENT_PROPS_2;
 
 export interface CONFIRMATION_MODAL_PROPS {
-  onConfirm?: Function;
-  onCancel?: Function;
+  onConfirm?:
+    | ((event: React.MouseEvent<HTMLButtonElement>) => any)
+    | Promise<any>;
+  onCancel?:
+    | ((event: React.MouseEvent<HTMLButtonElement>) => any)
+    | Promise<any>;
   title?: JSX.Element | string | null;
   description?: JSX.Element | string | null;
   confirmButton?:

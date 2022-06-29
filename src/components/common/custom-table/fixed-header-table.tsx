@@ -63,7 +63,16 @@ const StyledPaginationContainer = styled(Box)`
 // `
 // );
 
-export function FixedHeaderTable(props) {
+export interface FIXED_HEADER_TABLE_PROPS {
+  columns: { Header: string; accessor: string }[];
+  data: object[];
+  title?: string;
+  actions?: React.ReactNode;
+  loading?: boolean;
+  emptyMessage?: string;
+}
+
+export function FixedHeaderTable(props: FIXED_HEADER_TABLE_PROPS) {
   const { columns, data, title, actions, loading, emptyMessage } = props;
 
   return (
