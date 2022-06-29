@@ -1,6 +1,7 @@
 import { SIDEBAR_MENU_ITEMS_STRUCTURE } from "@/model";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ListIcon from "@mui/icons-material/List";
+import PersonIcon from "@mui/icons-material/Person";
 
 export const adminRoutes: SIDEBAR_MENU_ITEMS_STRUCTURE = [
   {
@@ -15,6 +16,11 @@ export const adminRoutes: SIDEBAR_MENU_ITEMS_STRUCTURE = [
         label: "View Products",
         link: "/admin",
         icon: <ListIcon />,
+      },
+      {
+        label: "Users",
+        link: "/admin/users",
+        icon: <PersonIcon />,
       },
     ],
   },
