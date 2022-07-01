@@ -1,4 +1,4 @@
-import { accessValueByString } from "./object-utils";
+import { accessValueByDotNotation } from "./object-utils";
 import { isValidValue } from "./string-utils";
 
 export function globalSearch(array, text) {
@@ -109,8 +109,8 @@ export const removeDuplicates = (
               !unique.some((obj) =>
                 keysForExactDuplicationCheck.every(
                   (individualKey) =>
-                    accessValueByString(obj, individualKey) ===
-                    accessValueByString(o, individualKey)
+                    accessValueByDotNotation(obj, individualKey) ===
+                    accessValueByDotNotation(o, individualKey)
                 )
               )
             ) {
@@ -122,8 +122,8 @@ export const removeDuplicates = (
               !unique.some((obj) =>
                 keys.some(
                   (individualKey) =>
-                    accessValueByString(obj, individualKey) ===
-                    accessValueByString(o, individualKey)
+                    accessValueByDotNotation(obj, individualKey) ===
+                    accessValueByDotNotation(o, individualKey)
                 )
               )
             ) {

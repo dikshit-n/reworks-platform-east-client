@@ -1,4 +1,15 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+
+const withPWA = require("next-pwa");
+
+module.exports = withPWA({
   reactStrictMode: true,
-}
+  pwa: {
+    dest: "public",
+    register: true,
+    skipWaiting: true,
+    disable: true,
+    // disable: process.env.NODE_ENV === "development",
+    // disable: process.env.NEXT_PUBLIC_PWA
+  },
+});

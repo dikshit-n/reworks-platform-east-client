@@ -35,11 +35,8 @@ export const HomePageContent = () => {
   const { data } = useSelector((state) => state.auth);
   const searchQuery = ignoreEmptyObject(query);
   const [products = [], loading, { refetch }] = useQueryState({
-    queryKey: "products",
-    queryFn: () =>
-      searchQuery
-        ? productsApi.fetchProductsByText(searchQuery?.searchValue)
-        : [],
+    queryKey: ["products", searchQuery?.page || 1],
+    queryFn: () => (searchQuery ? productsApi.fetchProducts(searchQuery) : []),
     onError: handleError,
   });
   const [fetchingData, setFetchingData] = useState(loading);
@@ -93,6 +90,8 @@ export const HomePageContent = () => {
       image: "/img/toys.png",
     },
   ];
+
+  console.log(process.env.NODE_ENV);
 
   return (
     <>

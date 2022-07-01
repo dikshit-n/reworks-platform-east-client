@@ -26,18 +26,18 @@ export const Header = () => {
   const router = useRouter();
 
   const formik = useFormik({
-    initialValues: { searchValue: "" },
+    initialValues: { searchKey: "" },
     onSubmit: () => {},
   });
 
   const handleSearch = ({ target: { value } }) => {
-    const searchString = getSearchString({ searchValue: value });
+    const searchString = getSearchString({ searchKey: value });
     router.replace(`/${searchString}`);
   };
 
   const searchBar: CONFIG_TYPE = [
     {
-      name: "searchValue",
+      name: "searchKey",
       type: "debounce-text",
       onChange: handleSearch,
       placeholder: "Search Products",

@@ -73,7 +73,7 @@ export const ViewUsersContent: React.FC = () => {
   return (
     <FixedHeaderTable
       loading={loading}
-      data={users}
+      data={tableData}
       columns={COLUMNS}
       title="Users"
       actions={actions}

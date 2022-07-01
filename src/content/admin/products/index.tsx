@@ -14,6 +14,7 @@ import {
   downloadLink,
   getSearchString,
   handleError,
+  ignoreEmptyObject,
   parseCSVFile,
 } from "@/utils";
 import { useState } from "react";
@@ -27,7 +28,8 @@ import { useRouter } from "next/router";
 import { useQueryState } from "@/hooks";
 import DownloadIcon from "@mui/icons-material/Download";
 
-const ProductsContainerWrapper = styled(Box)`
+const ProductsContainerWrapper = styled(Box)(
+  ({ theme }) => `
   display: flex;
   flex-direction: column;
   position: relative;
@@ -38,9 +40,11 @@ const ProductsContainerWrapper = styled(Box)`
     position: sticky;
     bottom: 0;
     width: 100%;
-    padding: 10px;
+    padding: 20px 10px;
+    background-color: ${theme.palette.background.default};
   }
-`;
+`
+);
 
 const ProductsHeader = styled(Box)`
   position: sticky;
@@ -64,10 +68,10 @@ const ProductsHeader = styled(Box)`
 export const ViewProductsContent: React.FC = () => {
   const [uploading, setUploading] = useState(false);
   const router = useRouter();
-  const page = `${router.query?.page || 1}`;
-  const [products, loading, { refetch }] = useQueryState({
-    queryKey: ["products", page],
-    queryFn: () => productsApi.fetchProducts(page),
+  const searchQuery = ignoreEmptyObject(router.query);
+  const [products = [], loading, { refetch }] = useQueryState({
+    queryKey: ["products", searchQuery?.page || 1],
+    queryFn: () => productsApi.fetchProducts(searchQuery),
     onError: handleError,
     keepPreviousData: true,
   });
@@ -75,7 +79,7 @@ export const ViewProductsContent: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       productsCSV: null,
-      searchValue: "",
+      searchKey: "",
     },
     onSubmit: () => {},
   });
@@ -122,7 +126,7 @@ export const ViewProductsContent: React.FC = () => {
 
   const searchBar: CONFIG_TYPE = [
     {
-      name: "searchValue",
+      name: "searchKey",
       type: "debounce-text",
       onChange: handleSearch,
       placeholder: "Search Products",
@@ -174,16 +178,16 @@ export const ViewProductsContent: React.FC = () => {
         {actions}
       </ProductsHeader>
       <ProductsContainerWrapper>
-        {DUMMY_DATA.map((el) => (
+        {/* {DUMMY_DATA.map((el) => (
           <ProductCard {...el} />
-        ))}
-        {/* {loading ? (
+        ))} */}
+        {loading ? (
           <AsyncDivSpinner />
         ) : products.length === 0 ? (
           <EmptyMessage variant="h4">No Items Found</EmptyMessage>
         ) : (
-          products.map((el, index) => <ProductCard {...el} />)
-        )} */}
+          products.map((el, index) => <ProductCard key={index} {...el} />)
+        )}
         <div className="pagination">
           <CustomPagination count={10} />
         </div>

@@ -1,6 +1,7 @@
 // import { capitalize } from "../../../../utils";
-import { TimePicker, TextField, LocalizationProvider } from "@mui/material";
-import AdapterMoment from "@mui/lab/AdapterMoment";
+import TextField from "@mui/material/TextField";
+import TimePicker from "@mui/lab/TimePicker";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { getValidDate } from "@/utils";
 
 // const DatePickers = [DesktopDatePicker, MobileDatePicker];

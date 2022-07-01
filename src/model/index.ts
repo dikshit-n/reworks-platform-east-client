@@ -663,12 +663,12 @@ export interface MODAL_EVENT_PROPS_2 extends CONFIRMATION_MODAL_PROPS {
 export type MODAL_EVENT_PROPS = MODAL_EVENT_PROPS_1 | MODAL_EVENT_PROPS_2;
 
 export interface CONFIRMATION_MODAL_PROPS {
-  onConfirm?:
-    | ((event: React.MouseEvent<HTMLButtonElement>) => any)
-    | Promise<any>;
-  onCancel?:
-    | ((event: React.MouseEvent<HTMLButtonElement>) => any)
-    | Promise<any>;
+  onConfirm?: any;
+  // | ((event: React.MouseEvent<HTMLButtonElement>) => any)
+  // | Promise<any>;
+  onCancel?: any;
+  // | ((event: React.MouseEvent<HTMLButtonElement>) => any)
+  // | Promise<any>;
   title?: JSX.Element | string | null;
   description?: JSX.Element | string | null;
   confirmButton?:

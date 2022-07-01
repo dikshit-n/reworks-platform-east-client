@@ -1,14 +1,14 @@
 import { axiosInstance, createApiFunction, getSearchString } from "@/utils";
 
 class ProductsApi {
-  fetchProducts(page?: string | number): Promise<Array<any>> {
+  fetchProducts(
+    query?: { searchKey: string; page?: string | number } | null
+  ): Promise<Array<any>> {
+    const { searchKey = "", page = 1 } = query || {};
     return createApiFunction(() =>
-      axiosInstance.get(`/products${getSearchString({ page })}`)
-    );
-  }
-  fetchProductsByText(searchKey: string): Promise<Array<any>> {
-    return createApiFunction(() =>
-      axiosInstance.post(`/products/search`, { searchKey })
+      axiosInstance.get(
+        `/products/search${getSearchString({ page, searchKey })}`
+      )
     );
   }
   uploadProducts(products): Promise<void> {

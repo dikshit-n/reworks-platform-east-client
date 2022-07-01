@@ -1,5 +1,7 @@
 // import { capitalize } from "../../../../utils";
-import { DatePicker, TextField, LocalizationProvider } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import DatePicker from "@mui/lab/DatePicker";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterMoment from "@mui/lab/AdapterMoment";
 import { getValidDate } from "@/utils";
 
