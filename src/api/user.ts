@@ -8,6 +8,9 @@ class UserApi {
   fetchUsers(): Promise<USERS> {
     return createApiFunction(() => axiosInstance.get("/users"));
   }
+  fetchUser(_id: USER_DETAILS["_id"]): Promise<USER_DETAILS> {
+    return createApiFunction(() => axiosInstance.get(`/user/${_id}`));
+  }
   createUser(details: ADD_USER): Promise<USER_DETAILS> {
     return createApiFunction(() => axiosInstance.post("/users", details));
   }

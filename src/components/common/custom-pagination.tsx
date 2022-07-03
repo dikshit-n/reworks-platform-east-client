@@ -4,10 +4,19 @@ import Pagination from "@mui/material/Pagination";
 import { useRouter } from "next/router";
 import { getSearchString } from "@/utils";
 import { CustomLink } from "@/components";
+import { useTheme } from "@mui/material";
 
 export const CustomPagination: React.FC<CUSTOM_PAGINATION_PROPS> = (props) => {
+  const theme = useTheme();
   const { pathname, query } = useRouter();
-  const { to = pathname, page, count, pageAccessor = "page", ...rest } = props;
+  const {
+    to = pathname,
+    page,
+    count,
+    pageAccessor = "page",
+    stickToBottom = true,
+    ...rest
+  } = props;
   let renderPage = parseInt(`${page || 0}`);
 
   if (!renderPage)
@@ -19,6 +28,21 @@ export const CustomPagination: React.FC<CUSTOM_PAGINATION_PROPS> = (props) => {
       [pageAccessor]: pageNumber === 1 ? undefined : pageNumber,
     });
     return `${to}${searchString}`;
+  };
+
+  const stickToBottomStyle: any = {
+    position: "sticky",
+    bottom: 0,
+    width: "100%",
+    backgroundColor: theme.palette.background.default,
+  };
+
+  const sx = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "30px 0",
+    ...(stickToBottom ? { ...rest.sx, ...stickToBottomStyle } : { ...rest.sx }),
   };
 
   return (
@@ -35,6 +59,7 @@ export const CustomPagination: React.FC<CUSTOM_PAGINATION_PROPS> = (props) => {
           />
         )}
         {...rest}
+        sx={sx}
       />
     )
   );

@@ -1,5 +1,6 @@
 import { ViewUsersContent } from "@/content/admin";
 import { Authenticated } from "@/guard";
+import { AdminLayout } from "@/layouts";
 import { NextPage } from "next";
 import Head from "next/head";
 
@@ -15,7 +16,9 @@ const ViewUsers: NextPage = () => {
 };
 
 ViewUsers.getLayout = (page) => (
-  <Authenticated roles={["admin"]}>{page}</Authenticated>
+  <Authenticated roles={["admin"]}>
+    <AdminLayout>{page}</AdminLayout>
+  </Authenticated>
 );
 
 export default ViewUsers;

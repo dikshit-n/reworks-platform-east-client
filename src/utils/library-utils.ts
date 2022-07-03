@@ -30,4 +30,14 @@ yup.addMethod(
   }
 );
 
+yup.addMethod(
+  yup.string,
+  "confirmPassword",
+  function (reference, errorMessage = "Password doesn't match") {
+    return yup.string().test("confirmPassword", errorMessage, function (value) {
+      return this.parent[reference] === value;
+    });
+  }
+);
+
 export { yup, uniqId };

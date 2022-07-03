@@ -10,5 +10,9 @@ declare module "yup" {
   > extends yup.BaseSchema<TType, TContext, TOut> {
     // declare all custom methods here
     password(message?: string): StringSchema<TType, TContext>;
+    confirmPassword(
+      reference: string,
+      message?: string
+    ): StringSchema<TType, TContext>;
   }
 }

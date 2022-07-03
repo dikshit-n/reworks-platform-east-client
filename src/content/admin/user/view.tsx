@@ -22,10 +22,14 @@ export const ViewUsersContent: React.FC = () => {
   const handleDeleteClick = (_id: string) => {
     window.modal({
       type: "confirmation",
-      onConfirm: createApiFunction(() => {
-        userApi.deleteUser(_id);
-        refetch();
-      }),
+      onConfirm: createApiFunction(
+        () => {
+          userApi.deleteUser(_id);
+          refetch();
+        },
+        () => {},
+        handleError
+      ),
     });
   };
 

@@ -18,8 +18,8 @@ export const adminRoutes: SIDEBAR_MENU_ITEMS_STRUCTURE = [
         icon: <ListIcon />,
       },
       {
-        label: "Users",
-        link: "/admin/users",
+        label: "User",
+        link: "/admin/user",
         icon: <PersonIcon />,
       },
     ],

@@ -15,3 +15,4 @@ export * from "./confirmation-modal";
 export * from "./custom-modal";
 export * from "./custom-pagination";
 export * from "./custom-link";
+export * from "./custom-card";

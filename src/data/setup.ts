@@ -17,5 +17,5 @@ export const rbacSetup = {
 
 //project-setup
 export const projectSetup = {
-  title: "Project Title",
+  title: "Reworks Platform East",
 };

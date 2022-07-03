@@ -22,7 +22,6 @@ import { productsApi } from "@/api";
 import { productDetailHeader } from "@/data";
 import { ProductCard } from "./components";
 import { Box, styled } from "@mui/material";
-import { DUMMY_DATA } from "./dummy-data";
 import SearchIcon from "@mui/icons-material/Search";
 import { useRouter } from "next/router";
 import { useQueryState } from "@/hooks";
@@ -36,13 +35,13 @@ const ProductsContainerWrapper = styled(Box)(
   max-height: 100%;
   min-height: 100%;
   box-sizing: border-box !important;
-  .pagination {
-    position: sticky;
-    bottom: 0;
-    width: 100%;
-    padding: 20px 10px;
-    background-color: ${theme.palette.background.default};
-  }
+  // .pagination {
+  //   position: sticky;
+  //   bottom: 0;
+  //   width: 100%;
+  //   padding: 20px 10px;
+  //   background-color: ${theme.palette.background.default};
+  // }
 `
 );
 
@@ -188,9 +187,7 @@ export const ViewProductsContent: React.FC = () => {
         ) : (
           products.map((el, index) => <ProductCard key={index} {...el} />)
         )}
-        <div className="pagination">
-          <CustomPagination count={10} />
-        </div>
+        <CustomPagination count={10} />
       </ProductsContainerWrapper>
     </>
   );
