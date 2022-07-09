@@ -11,13 +11,14 @@ import BackupIcon from "@mui/icons-material/Backup";
 import { useFormik } from "formik";
 import { CONFIG_TYPE } from "@/model";
 import {
+  createApiFunction,
   downloadLink,
   getSearchString,
   handleError,
   ignoreEmptyObject,
   parseCSVFile,
 } from "@/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { productsApi } from "@/api";
 import { productDetailHeader } from "@/data";
 import { ProductCard } from "./components";
@@ -75,6 +76,10 @@ export const ViewProductsContent: React.FC = () => {
     keepPreviousData: true,
   });
 
+  useEffect(() => {
+    refetch();
+  }, [searchQuery]);
+
   const formik = useFormik({
     initialValues: {
       productsCSV: null,
@@ -84,7 +89,7 @@ export const ViewProductsContent: React.FC = () => {
   });
 
   const handleSearch = ({ target: { value } }) => {
-    const searchString = getSearchString({ productId: value });
+    const searchString = getSearchString({ searchKey: value });
     router.replace(`/admin${searchString}`);
   };
 
@@ -104,6 +109,21 @@ export const ViewProductsContent: React.FC = () => {
       handleError(err);
     }
     setUploading(false);
+  };
+
+  const handleDeleteClick = (_id: string) => {
+    window.modal({
+      type: "confirmation",
+      onConfirm: () =>
+        createApiFunction(
+          () => productsApi.deleteProduct(_id),
+          () => {
+            window.flash({ message: "Deleted Successfully" });
+            refetch();
+          },
+          handleError
+        ),
+    });
   };
 
   const handleSampeDownload = () =>
@@ -185,7 +205,13 @@ export const ViewProductsContent: React.FC = () => {
         ) : products.length === 0 ? (
           <EmptyMessage variant="h4">No Items Found</EmptyMessage>
         ) : (
-          products.map((el, index) => <ProductCard key={index} {...el} />)
+          products.map((el, index) => (
+            <ProductCard
+              handleDeleteClick={handleDeleteClick}
+              key={index}
+              {...el}
+            />
+          ))
         )}
         <CustomPagination count={10} />
       </ProductsContainerWrapper>

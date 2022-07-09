@@ -1,3 +1,4 @@
+// import { PRODUCT_DETAILS } from "@/model";
 import { axiosInstance, createApiFunction, getSearchString } from "@/utils";
 
 class ProductsApi {
@@ -15,6 +16,9 @@ class ProductsApi {
     return createApiFunction(() =>
       axiosInstance.post("/products/csv/import", products)
     );
+  }
+  deleteProduct(_id: string): Promise<void> {
+    return createApiFunction(() => axiosInstance.delete(`/products/${_id}`));
   }
 }
 

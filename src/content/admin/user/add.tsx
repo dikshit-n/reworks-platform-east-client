@@ -14,7 +14,7 @@ export const AddUserContent: React.FC = () => {
   const handleSubmit = async (data: ADD_USER) => {
     setSubmitting(true);
     try {
-      await userApi.updateUser(data);
+      await userApi.createUser(data);
       push("/admin/user");
       window.flash({ message: "Updated successfully" });
     } catch (err) {

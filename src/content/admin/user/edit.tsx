@@ -11,7 +11,7 @@ import { useState } from "react";
 export const EditUserContent: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const { query, push } = useRouter();
-  const { _id } = query;
+  const _id = query._id as string;
 
   const [userDetails, loading] = useQueryState({
     queryKey: `user.${_id}`,
@@ -22,7 +22,7 @@ export const EditUserContent: React.FC = () => {
   const handleSubmit = async (data: Partial<USER_DETAILS>) => {
     setSubmitting(true);
     try {
-      await userApi.updateUser(data);
+      await userApi.updateUser({ ...data, _id });
       push("/admin/user");
       window.flash({ message: "Updated successfully" });
     } catch (err) {

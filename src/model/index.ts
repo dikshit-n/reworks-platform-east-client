@@ -90,6 +90,10 @@ export interface ADD_USER extends Omit<USER_DETAILS, "_id"> {
   confirmPassword: string;
 }
 
+// products
+
+export type PRODUCT_DETAILS = any;
+
 // contexts
 // sidebar-context
 export interface SIDEBAR_CONTEXT {

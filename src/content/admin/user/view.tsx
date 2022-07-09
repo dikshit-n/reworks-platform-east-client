@@ -13,7 +13,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export const ViewUsersContent: React.FC = () => {
-  const [users, loading, { refetch }] = useQueryState({
+  const [users = [], loading, { refetch }] = useQueryState({
     queryFn: userApi.fetchUsers,
     queryKey: "user",
     onError: handleError,
@@ -45,7 +45,7 @@ export const ViewUsersContent: React.FC = () => {
       <FlexRow sx={{ gap: 3 }}>
         <Tooltip title="Edit">
           <span>
-            <CustomIconButton color="primary" href={`/user/${el._id}`}>
+            <CustomIconButton color="primary" href={`/admin/user/${el._id}`}>
               <EditIcon />
             </CustomIconButton>
           </span>

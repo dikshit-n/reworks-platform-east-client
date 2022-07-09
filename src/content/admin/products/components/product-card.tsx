@@ -1,13 +1,15 @@
 import { MenuItem, styled, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { TagsWrapper } from "@/components";
 import { DefaultProductAvatarSrc } from "@/data";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { PRODUCT_DETAILS } from "@/model";
 
 const StyledProductCardWrapper = styled(Paper)(
   ({ theme }) => `
     display: grid;
-    grid-template-columns: 200px 1fr 100px;
+    grid-template-columns: 200px 1fr 110px;
     border-radius: 20px;
     margin: 10px 0;
     height: fit-content;
@@ -18,6 +20,9 @@ const StyledProductCardWrapper = styled(Paper)(
       .image {
         border-top-right-radius: 20px;
         border-bottom-left-radius: 0 !important;
+      }
+      .actions {
+        justify-content: center;
       }
     }
     .image {
@@ -48,9 +53,10 @@ const StyledProductCardWrapper = styled(Paper)(
         }
     }
     .actions {
-        > * {
-            height: 100%;
-        }
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      overflow: hidden;
     }
     `
 );
@@ -69,8 +75,17 @@ const Tag = (props) => {
   );
 };
 
-export const ProductCard = (props) => {
-  const { readable_name, image_url, item_desc, item_size, productId } = props;
+export const ProductCard: React.FC<
+  PRODUCT_DETAILS & { handleDeleteClick: Function }
+> = (props) => {
+  const {
+    readable_name,
+    image_url,
+    item_desc,
+    item_size,
+    productId,
+    handleDeleteClick,
+  } = props;
 
   const loadImage = (url) => {
     try {
@@ -108,7 +123,13 @@ export const ProductCard = (props) => {
           target="_blank"
           sx={{ display: "grid", placeContent: "center" }}
         >
-          <OpenInNewIcon color="primary" />
+          <EditIcon color="primary" />
+        </MenuItem>
+        <MenuItem
+          onClick={() => handleDeleteClick(productId)}
+          sx={{ display: "grid", placeContent: "center" }}
+        >
+          <DeleteIcon color="primary" />
         </MenuItem>
       </div>
     </StyledProductCardWrapper>
